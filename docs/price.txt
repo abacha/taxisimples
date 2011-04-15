@@ -1,0 +1,24 @@
+/v2/price
+request:
+  {
+    start_point: latlng,strect address with street number or foursquare venue id(4sqr:id)
+    end_point: latlng,strect address with street number or foursquare venue id(4sqr:id)
+    access_token: oauth2 access token granted by a user to a client
+  }
+response:
+{ 
+  "meta":
+  {
+    "code": :int,
+    "error": (invalid_request|invalid_grant) OPTIONAL
+  },
+  "response":
+  {
+    "distance": float,
+    "normal_price": float,
+    "special_price": float,
+    "has_cab": boolean,
+    "has_avaliable_cab": boolean
+  }
+}
+

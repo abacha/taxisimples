@@ -1,0 +1,32 @@
+/v2/self
+request:
+  {
+    access_token: oauth2 access token granted by a user to a client
+  }
+response:
+{ 
+  "meta":
+  {
+    "code": :int,
+    "error": (invalid_request|invalid_grant) OPTIONAL
+  },
+  "response":
+  {
+    "id": int,
+    "name": string,
+    "phone": string,
+    lasts_cab_requests:[
+      {
+        "id": int
+        "date": datetime,
+        "status": (canceled|cab_confirmed|cab_unavaliable|invalid_address)
+        "cab":
+        {
+          "id": int,
+          "name": string,
+          "phone": string
+        }
+      }
+    ],
+  }
+}

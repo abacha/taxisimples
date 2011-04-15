@@ -1,0 +1,57 @@
+Passos:
+
+A - aplicação faz uma http request para "http://app.taxisimples.com.br/oauth2/authorize" com
+    ?client_id=YOUR_CLIENT_APP_ID
+    &response_type=code
+    &redirect_uri=YOUR_REGISTERED_REDIRECT_URI
+    &passenger_phone=TELEFONE_USUARIO
+    &passenger_name=NOME_USUARIO
+    
+    A aplicação sera redirecionada para http://example.com/auth_code(YOUR_REGISTERED_REDI
+    RECT_URI), com status {error: "access_denied"}:
+    http://example.com/auth_code?error=access_denied
+    
+    ou tera uma resposta json se redirect_uri não for informado:
+    { 
+      "meta":
+      {
+        "code": :401,
+        "error": access_denied
+      },
+      "response": {}
+    } 
+    Pois a autorização é feita via PIN.
+    
+    Caro o cliente não exista, uma nova conta será criada com as informações passagas.
+        
+B - O taxisimples.com.br envia um SMS com um codigo PIN para o usuario
+
+C - O usuario entra com o codigo PIN na aplicação
+
+D - A aplicação faz um http request para "http://app.taxisimples.com.br/oauth2/access_token" com
+
+    ?client_id=YOUR_CLIENT_APP_ID
+    &client_secret=YOUR_CLIENT_SECRET
+    &grant_type=authorization_code
+    &redirect_uri=YOUR_REGISTERED_REDIRECT_URI
+    &code=PIN
+    
+
+E - Caso tudo ocorra bem, e o redirect_uri for preenchido, sera redirecionado para (YOUR_REGISTERED_REDIRECT_URI=
+    "http://example.com/auth_code":
+    http://example.com/auth_code?access_token=ACCESS_TOKEN
+    
+    Caso não seja informado o redirect_uri, o corpo da pagina será:
+    { 
+      "meta":
+      {
+        "code": 200
+      },
+      "response":
+      {
+        access_token: ACCESS_TOKEN
+      }
+    }
+    
+F - Em posso do ACCESS_TOKEN a aplicação pode usar os recursos colocando na string query o parametro:
+    ?access_token=ACCESS_TOKEN
