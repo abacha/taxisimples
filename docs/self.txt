@@ -19,7 +19,17 @@ response:
       {
         "id": int
         "date": datetime,
-        "status": (canceled|cab_confirmed|cab_unavaliable|invalid_address)
+        "status": (canceled|cab_confirmed|cab_unavaliable|invalid_address),
+        "origin": 
+        {
+          "lat": float,
+          "lng": float
+        },
+        "origin": 
+        {
+          "lat": float,
+          "lng": float
+        },
         "cab":
         {
           "id": int,
