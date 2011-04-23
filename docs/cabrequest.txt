@@ -10,13 +10,22 @@ response:
   "meta":
   {
     "code": int,
-    "error": (invalid_request|invalid_grant|cab_unavaliable) OPTIONAL
+    "error": (invalid_request|invalid_grant) OPTIONAL
   },
   "response":
   {
-    "id": int
-    "distance": float,
-    "status": cab_pendent
+    "id": int,
+    "origin": 
+    {
+      "lat":float,
+      "lng":float
+    },
+    "dest": 
+    {
+      "lat":float,
+      "lng":float
+    },
+    "status": (cab_pendent|cab_unavaliable|invalid_address)
   }
 }
 
@@ -36,7 +45,7 @@ response:
   {
     "id": int
     "distance": float,
-    "status": cab_pendent,
+    "status": (cab_pendent|cab_confirmed|cab_unavaliable|canceled)
     "cab": OPTIONAL
     {
       "id": int,
