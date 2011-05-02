@@ -1,0 +1,35 @@
+<div class="page-content">
+	<h1>Chamar um táxi</h1>
+	<div class="box form">
+		<form id="route_form" action="#/run/price" method="POST">
+			<div class="form-row city">
+			<select name="city" id="city" size="1">
+				<option value="">Cidade</option>
+				<option value="Campo Grande, MS">Campo Grande</option>
+			</select>
+			</div>
+			<div class="form-row origin">
+				<input type="text" name="start_point" value="afonso pena, 100" id="start_point" />
+			</div>
+			<div class="form-row destination">
+				<input type="text" name="end_point" value="josé antonio, 1000" id="end_point" />
+			</div>
+		</form>
+	</div>
+	<a href="#" class="btn btn-half-1" onclick="$('#route_form').attr('action', '#/run/price'); $('#route_form').submit();">Calcular</a>
+	<a href="#" class="btn btn-half-2" onclick="$('#route_form').attr('action', '#/run/request'); $('#route_form').submit();">Chamar</a>
+</div>
+<script type="text/javascript">
+	$("#start_point").focus(function() {
+		if ($(this).val() == "Origem") $(this).val("");
+	});
+	$("#start_point").blur(function() {
+		if ($(this).val() == "") $(this).val("Origem");
+	});
+	$("#end_point").focus(function() {
+		if ($(this).val() == "Destino") $(this).val("");
+	});
+	$("#end_point").blur(function() {
+		if ($(this).val() == "") $(this).val("Destino");
+	});
+</script>

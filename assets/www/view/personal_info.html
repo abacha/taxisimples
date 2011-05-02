@@ -1,0 +1,29 @@
+<div class="page-content">
+    <form action="#/user/authorize" method="post" id="form_info">
+		<h1>Crie sua conta</h1>
+		<div class="box form">
+		    <div class="form-row">
+			    <input type="text" name="client_name" value="Seu nome" id="name" />
+		    </div>
+		    <div class="form-row">
+				<input type="text" name="client_phone" value="Celular" id="phone" />		        
+		    </div>
+		</div>
+		<a href="#" class="btn" onclick="$('#form_info').submit();">Criar conta</a>
+    </form>
+	<a class="btn" href="#/user/confirm_pin">Já possuo um código</a>
+</div>
+<script type="text/javascript">
+	$("#phone").focus(function() {
+		if ($(this).val() == "Celular") $(this).val("");
+	});
+	$("#phone").blur(function() {
+		if ($(this).val() == "") $(this).val("Celular");
+	});
+	$("#name").focus(function() {
+		if ($(this).val() == "Seu nome") $(this).val("");
+	});
+	$("#name").blur(function() {
+		if ($(this).val() == "") $(this).val("Seu nome");
+	});
+</script>
