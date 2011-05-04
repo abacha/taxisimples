@@ -3,9 +3,8 @@
 	<div class="box form">
 		<form id="route_form" action="#/run/price" method="POST">
 			<div class="form-row city">
-			<select name="city" id="city" size="1">
+			<select name="city" id="cities" size="1">
 				<option value="">Cidade</option>
-				<option value="Campo Grande, MS">Campo Grande</option>
 			</select>
 			</div>
 			<div class="form-row origin">
@@ -32,4 +31,13 @@
 	$("#end_point").blur(function() {
 		if ($(this).val() == "") $(this).val("Destino");
 	});
+	$.ajax({
+		url : Url.cities,
+		dataType : 'jsonp',
+		success : function(data) {
+			$.each(data, function(k, city) {
+				$('#cities').append(new Option(city.city.name, city.city.search_name, false, false));
+			});
+		}
+	});	
 </script>

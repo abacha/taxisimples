@@ -14,10 +14,11 @@ var PriceModel = function() {
 			success : function(data) {
 				switch (data.meta.code) {
 				case 200:
-					$("#normal_price").html("R$ " + (data.response.normal_price / 100));
-					$("#special_price").html("R$ " + (data.response.normal_price / 100));
-					$("#distance").html(data.response.distance + " km");
 					$("#page").addClass("map-wrap");
+					
+					$("#normal_price").html("R$ " + data.response.normal_price);
+					$("#special_price").html("R$ " + data.response.special_price);
+					$("#distance").html(data.response.distance + " km");
 					$("#start_point").val(params["start_point"]);
 					$("#end_point").val(params["end_point"]);
 					$("#header").html(

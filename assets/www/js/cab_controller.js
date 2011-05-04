@@ -15,13 +15,14 @@ CabController = function() {
 	}
 
 	this.get_history = function(context) {
-		cab_model.get_history(Configuration.access_token);
+		var fail = function(error_type) {
+			alert('Um erro inesperado ocorreu, contacte o suporte da aplicação');
+		}
+		cab_model.get_history(Configuration.access_token, fail);
 	}
 
-	this.get_info = function(context) {
-		alert(1);
-		cab_model.get_info(Configuration.access_token, id);
-		alert(2);
+	this.get_info = function(id) {
+		cab_model.get_info(Url.Cab.info + id);
 	}
 	
 }

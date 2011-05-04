@@ -20,7 +20,9 @@ Url = {
 	Cab : {
 		request : Configuration.server + "/v2/cabrequest",
 		info : Configuration.server + "/v2/cabrequest/"
-	}
+	},
+
+	cities : Configuration.server + '/cidades.json'
 
 }
 
@@ -49,13 +51,16 @@ var app = $.sammy("#page", function() {
 		$("#header").html("");
 		$("#page").removeClass("map-wrap");
 	});
-	this.get('#/run/history', cab_controller.get_history);
+	this.get('#/run/history', function() {
+		this.partial('view/history.html');
+		cab_controller.get_history();
+	});
 
 	this.post('#/run/price', function() {
 		this.partial('view/map.html');
 		price_controller.get_price(this.params);
 	});
-	
+
 	this.post("#/run/request", function() {
 		this.partial('view/run_status.html');
 		cab_controller.request(this.params);
