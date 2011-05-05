@@ -12,8 +12,8 @@ var RouteModel = function() {
 		var map = new google.maps.Map(document.getElementById("map"), myOptions);
 		directionsDisplay.setMap(map);
 		var request = {
-			origin : params["start_point"],
-			destination : params["end_point"],
+			origin : params["start_point"] + " - " + params["city"] + " - Brasil",
+			destination : params["end_point"] + " - " + params["city"] + " - Brasil",
 			travelMode : google.maps.DirectionsTravelMode.DRIVING
 
 		};

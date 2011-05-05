@@ -18,6 +18,7 @@ CabController = function() {
 		var fail = function(error_type) {
 			alert('Um erro inesperado ocorreu, contacte o suporte da aplicação');
 		}
+		$("#map").hide();
 		cab_model.get_history(Configuration.access_token, fail);
 	}
 

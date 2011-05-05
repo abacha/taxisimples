@@ -2,7 +2,8 @@ var OAuth2Model = function() {
 
 	this.request_pin = function(params, success, fail) {
 		url = Url.Oauth2.authenticate;
-		if (params["client_phone"].length == 10) params["client_phone"] = "55" + params["client_phone"];
+		if (params["client_phone"].length == 10)
+			params["client_phone"] = "55" + params["client_phone"];
 		params = {
 			client_id : Configuration.client_id,
 			response_type : "code",
@@ -45,8 +46,7 @@ var OAuth2Model = function() {
 			success : function(data) {
 				if (data.meta.code == 200) {
 					Configuration.access_token = data.response.access_token;
-					window.localStorage.setItem("access_token",
-							Configuration.access_token);
+					window.localStorage.setItem("access_token", Configuration.access_token);
 					success();
 				} else {
 					fail();

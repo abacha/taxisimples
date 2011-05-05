@@ -73,11 +73,10 @@ div.scroll {
 .btn-small {
     display: inline-block;
     font-size: 12px;
-    width: 80px;
-    padding: 7px 0;
+    width: 60px;
+    padding: 5px 0;
     box-shadow: none;
 }
-
 
 
 body {
@@ -277,5 +276,7 @@ body {
 
 
 
-
+.super {
+	display: none;
+}
 

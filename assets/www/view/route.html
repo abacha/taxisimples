@@ -8,36 +8,45 @@
 			</select>
 			</div>
 			<div class="form-row origin">
-				<input type="text" name="start_point" value="afonso pena, 100" id="start_point" />
+				<input type="text" name="start_point" id="start_point" value="Origem" />
 			</div>
 			<div class="form-row destination">
-				<input type="text" name="end_point" value="josé antonio, 1000" id="end_point" />
+				<input type="text" name="end_point" id="end_point" value="Destino" />
 			</div>
 		</form>
 	</div>
 	<a href="#" class="btn btn-half-1" onclick="$('#route_form').attr('action', '#/run/price'); $('#route_form').submit();">Calcular</a>
 	<a href="#" class="btn btn-half-2" onclick="$('#route_form').attr('action', '#/run/request'); $('#route_form').submit();">Chamar</a>
 </div>
-<script type="text/javascript">
-	$("#start_point").focus(function() {
-		if ($(this).val() == "Origem") $(this).val("");
-	});
-	$("#start_point").blur(function() {
-		if ($(this).val() == "") $(this).val("Origem");
-	});
-	$("#end_point").focus(function() {
-		if ($(this).val() == "Destino") $(this).val("");
-	});
-	$("#end_point").blur(function() {
-		if ($(this).val() == "") $(this).val("Destino");
-	});
-	$.ajax({
-		url : Url.cities,
-		dataType : 'jsonp',
-		success : function(data) {
-			$.each(data, function(k, city) {
-				$('#cities').append(new Option(city.city.name, city.city.search_name, false, false));
-			});
+<script charset="utf-8" type="text/javascript">
+	$(document).ready(function() {
+		$("#start_point").focus(function() {
+			if ($(this).val() == "Origem") $(this).val("");
+		});
+		$("#start_point").blur(function() {
+			if ($(this).val() == "") $(this).val("Origem");
+		});
+		$("#end_point").focus(function() {
+			if ($(this).val() == "Destino") $(this).val("");
+		});
+		$("#end_point").blur(function() {
+			if ($(this).val() == "") $(this).val("Destino");
+		});
+		
+		$.ajax({
+			url : Url.cities,
+			dataType : 'jsonp',
+			success : function(data) {
+				$.each(data, function(k, city) {
+					$('#cities').append(new Option(city.city.name, city.city.search_name, false, false));
+				});
+				if (window.localStorage.getItem("city")) {
+					$("#cities").val(window.localStorage.getItem("city"));
+				}
+			}
+		});
+		if (window.localStorage.getItem("destination")) {
+			$("#end_point").val(window.localStorage.getItem("destination"));
 		}
-	});	
+	});
 </script>

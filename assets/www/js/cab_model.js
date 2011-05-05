@@ -14,7 +14,7 @@ var CabModel = function() {
 					$("#header").html('<a href="#/run/history" class="btn-back"><img src="img/btn-back.png" alt="Voltar" /></a>');
 					$(".status").hide();
 					$("#run_id").val(data.response.id);
-					if (data.response.cab) {						
+					if (data.response.cab) {
 						if (!$("#map").is(":visible")) {
 							$("#map").show();
 							$("#map").addClass('map-2');
@@ -24,16 +24,15 @@ var CabModel = function() {
 						$("#special_price").html("R$ " + data.response.special_price);
 						$("#status_ok").show();
 						$("#cab").html(data.response.cab.name + " - " + data.response.cab.phone.substr(2).replace(/(\d{2})/, "($1) "));
-						
+
 						var params = new Array();
 						params["start_point"] = data.response.cab.position.lat + "," + data.response.cab.position.lat;
 						params["end_point"] = data.response.origin.lat + "," + data.response.origin.lng;
 						var route_model = new RouteModel();
 						route_model.get_route(params);
-					}
-					else {
+					} else {
 						$("#map").hide();
-					}					
+					}
 					if (data.response.status == "cab_pendent") {
 						$("#status_wait").show();
 					}
@@ -52,7 +51,7 @@ var CabModel = function() {
 			}
 		});
 	}
-	
+
 	this.get_info = function(params) {
 		get_info(params);
 	}
@@ -92,20 +91,52 @@ var CabModel = function() {
 			},
 			dataType : "jsonp",
 			success : function(data) {
-				status = { "cab_confirmed":"Confirmado", "cab_unavaliable":"Indisponível", "cab_canceled":"Cancelado" }
+				status = {
+					"cab_confirmed" : "Confirmado",
+					"cab_unavaliable" : "Indisponível",
+					"cab_canceled" : "Cancelado"
+				}
 				switch (data.meta.code) {
 				case 200:
 					$.each(data.response.lasts_cab_requests, function(k, value) {
-						$("#history").append(((k % 2 == 0) ? "<tr>":"<tr class=\"zebra\">") +
-							"<td class=\"center\">"+value.date.replace("T", " ")+"</td>" +
-							"<td>"+value.dest.lat + "," + value.dest.lng +"</td>" +
-							"<td class=\"center\"><strong class=\""+ value.status +"\">" + status[value.status] + "</strong></td>"+
-							"<td class=\"center\"><a href=\"\" class=\"btn btn-small\">Chamar</a></td></tr>");
+						get_address(value.dest.lat + "," + value.dest.lng, function(address) {
+							var destination = address[1].long_name + ", " + address[0].long_name;
+							var city = address[3].long_name;
+							var tr = ".tr_" + k;
+							$(".super").clone().removeClass("super").addClass("tr_" + k).appendTo("#history");
+							if (k % 2 == 0) {
+								$(tr).addClass("zebra");
+							}
+							$(tr + " .date").html(value.date.replace(/(\d{4})-(\d{2})-(\d{2})T([0-9:]{5}).*/, "$3/$2/$1 às $4"));
+							$(tr + " .status").addClass(value.status).html(status[value.status]);
+							$(tr + " .dest").html(destination);
+							//$(tr + " .btn").attr("href", $(tr + " a").attr("href") + "&destination=" + destination); 
+							$(tr + " .btn").click(function() {
+								alert(destination);
+							});
+						});
 					});
+					$(".super").remove();
 					break;
 				default:
 					fail(data.meta.code);
 					break;
+				}
+			}
+		});
+	}
+
+	var get_address = function(latlng, success) {
+		$.ajax({
+			url : "http://maps.googleapis.com/maps/api/geocode/json?sensor=false",
+			type : "GET",
+			data : { "latlng" : latlng } ,
+			dataType : "json",
+			success : function(data) {
+				if (data.status == "OK") {
+					if (data.results[0]) {
+						success(data.results[0].address_components);
+					}
 				}
 			}
 		});

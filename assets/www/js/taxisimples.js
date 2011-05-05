@@ -29,6 +29,7 @@ Url = {
 var oauth2_controller = new OAuth2Controller();
 var price_controller = new PriceController();
 var cab_controller = new CabController();
+var route_controller = new RouteController();
 
 var oauth2_model = new OAuth2Model();
 var price_model = new PriceModel();
@@ -37,7 +38,7 @@ var cab_model = new CabModel();
 var app = $.sammy("#page", function() {
 	this.get('#/', function() {
 		if (Configuration.access_token) {
-			this.partial('view/route.html');
+			document.location.hash = '#/run/route';
 		} else {
 			this.partial('view/personal_info.html');
 		}
@@ -47,9 +48,7 @@ var app = $.sammy("#page", function() {
 	this.post('#/user/authorize', oauth2_controller.request_pin);
 	this.get('#/run/route', function() {
 		this.partial('view/route.html');
-		$("#map").hide();
-		$("#header").html("");
-		$("#page").removeClass("map-wrap");
+		route_controller.render(this.params);
 	});
 	this.get('#/run/history', function() {
 		this.partial('view/history.html');
