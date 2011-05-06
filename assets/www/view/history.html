@@ -14,7 +14,7 @@
 				<span class="status"></span>
 			</td>
 			<td class="center">
-				<a href="#/run/route" class="btn btn-small">Chamar</a>				
+				<a href="#/run/route" class="btn btn-small" onclick="window.localStorage.setItem('destination', $(this).attr('alt')); window.localStorage.setItem('city', $(this).attr('name'));">Chamar</a>				
 			</td>
 		</tr>
 	</tbody>

@@ -72,8 +72,8 @@ var app = $.sammy("#page", function() {
 });
 
 var initializer = function() {
-	// document.addEventListener("deviceready", function() {
-	Configuration.access_token = window.localStorage.getItem("access_token");
-	app.run("#/")
-	// }, false);
+	//document.addEventListener("deviceready", function() {
+		Configuration.access_token = window.localStorage.getItem("access_token");
+		app.run("#/")
+	//}, false);
 }

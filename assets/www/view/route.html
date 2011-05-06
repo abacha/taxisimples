@@ -41,7 +41,7 @@
 					$('#cities').append(new Option(city.city.name, city.city.search_name, false, false));
 				});
 				if (window.localStorage.getItem("city")) {
-					$("#cities").val(window.localStorage.getItem("city"));
+					$("#cities").val(window.localStorage.getItem("city").toLowerCase());
 				}
 			}
 		});

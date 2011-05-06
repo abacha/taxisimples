@@ -11,7 +11,7 @@ var CabModel = function() {
 			success : function(data) {
 				switch (data.meta.code) {
 				case 200:
-					$("#header").html('<a href="#/run/history" class="btn-back"><img src="img/btn-back.png" alt="Voltar" /></a>');
+					$("#header").html('<a href="#/run/route" class="btn-back"><img src="img/btn-back.png" alt="Voltar" /></a>');
 					$(".status").hide();
 					$("#run_id").val(data.response.id);
 					if (data.response.cab) {
@@ -20,8 +20,8 @@ var CabModel = function() {
 							$("#map").addClass('map-2');
 						}
 						$("#distance").html(data.response.cab.distance + " km");
-						$("#normal_price").html("R$ " + data.response.normal_price);
-						$("#special_price").html("R$ " + data.response.special_price);
+						$("#normal_price").html("R$ " + Math.round(data.response.normal_price * 100) / 100);
+						$("#special_price").html("R$ " + Math.round(data.response.special_price * 100) / 100);
 						$("#status_ok").show();
 						$("#cab").html(data.response.cab.name + " - " + data.response.cab.phone.substr(2).replace(/(\d{2})/, "($1) "));
 
@@ -36,7 +36,7 @@ var CabModel = function() {
 					if (data.response.status == "cab_pendent") {
 						$("#status_wait").show();
 					}
-					if (data.response.status == "cab_unavaliable") {
+					if (data.response.status == "cab_unavaliable" || data.response.status == "invalid_address") {
 						$("#status_error").show();
 					}
 					if (data.response.status == "canceled") {
@@ -59,8 +59,8 @@ var CabModel = function() {
 	this.request = function(params, success, fail) {
 		var data = {
 			access_token : Configuration.access_token,
-			start_point : "str:" + params["start_point"],
-			end_point : "str:" + params["end_point"]
+			start_point : "str:" + params["start_point"] + params["end_point"] + " - " + params["city"] + " - Brasil",
+			end_point : "str:" + params["end_point"] + params["end_point"] + " - " + params["city"] + " - Brasil"
 		}
 		$.ajax({
 			url : Url.Cab.request,
@@ -74,7 +74,6 @@ var CabModel = function() {
 					get_info(Url.Cab.info + data.response.id);
 					break;
 				default:
-					console.dir(data);
 					fail(data.meta.code);
 					break;
 				}
@@ -91,11 +90,13 @@ var CabModel = function() {
 			},
 			dataType : "jsonp",
 			success : function(data) {
-				status = {
+				var status = {
 					"cab_confirmed" : "Confirmado",
 					"cab_unavaliable" : "Indisponível",
-					"cab_canceled" : "Cancelado"
-				}
+					"cab_canceled" : "Cancelado",
+					"canceled" : "Cancelado",
+					"invalid_address" : "Cancelado"
+				};
 				switch (data.meta.code) {
 				case 200:
 					$.each(data.response.lasts_cab_requests, function(k, value) {
@@ -110,13 +111,11 @@ var CabModel = function() {
 							$(tr + " .date").html(value.date.replace(/(\d{4})-(\d{2})-(\d{2})T([0-9:]{5}).*/, "$3/$2/$1 às $4"));
 							$(tr + " .status").addClass(value.status).html(status[value.status]);
 							$(tr + " .dest").html(destination);
-							//$(tr + " .btn").attr("href", $(tr + " a").attr("href") + "&destination=" + destination); 
-							$(tr + " .btn").click(function() {
-								alert(destination);
-							});
+							$(tr + " .btn").attr("alt", destination);
+							$(tr + " .btn").attr("name", city);
 						});
 					});
-					$(".super").remove();
+					//$(".super").remove();
 					break;
 				default:
 					fail(data.meta.code);
@@ -130,10 +129,12 @@ var CabModel = function() {
 		$.ajax({
 			url : "http://maps.googleapis.com/maps/api/geocode/json?sensor=false",
 			type : "GET",
-			data : { "latlng" : latlng } ,
+			data : {
+				"latlng" : latlng
+			},
 			dataType : "json",
 			success : function(data) {
-				if (data.status == "OK") {
+				if (data != null && data.status == "OK") {
 					if (data.results[0]) {
 						success(data.results[0].address_components);
 					}

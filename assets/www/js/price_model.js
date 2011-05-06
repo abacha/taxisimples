@@ -3,8 +3,8 @@ var PriceModel = function() {
 	this.get_price = function(params, success, fail) {
 		var data = {
 			access_token : Configuration.access_token,
-			start_point : "str:" + params["start_point"],
-			end_point : "str:" + params["end_point"]
+			start_point : "str:" + params["start_point"] + " - " + params["city"] + " - Brasil",
+			end_point : "str:" + params["end_point"] + " - " + params["city"] + " - Brasil"
 		}
 		$.ajax({
 			url : Url.Run.price,
@@ -15,11 +15,12 @@ var PriceModel = function() {
 				switch (data.meta.code) {
 				case 200:
 					$("#page").addClass("map-wrap");
-					$("#normal_price").html("R$ " + data.response.normal_price);
-					$("#special_price").html("R$ " + data.response.special_price);
+					$("#normal_price").html("R$ " + Math.round(data.response.normal_price*100)/100);
+					$("#special_price").html("R$ " + Math.round( data.response.special_price*100)/100);
 					$("#distance").html(data.response.distance + " km");
 					$("#start_point").val(params["start_point"]);
 					$("#end_point").val(params["end_point"]);
+					$("#city").val(params["city"]);
 					$("#header").html(
 						'<a href="#/run/route" class="btn-back"><img src="img/btn-back.png" alt="Voltar" /></a>'
 						+ '<a href="#" onclick="$(\'#route_form\').submit()" class="btn-call"><img src="img/btn-call.png" alt="Chamar" /></a>');
@@ -32,7 +33,8 @@ var PriceModel = function() {
 					break;
 
 				}
-			}
+			},
+			error: function() { fail(); }
 		});
 	}
 }
