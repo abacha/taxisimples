@@ -45,7 +45,7 @@ var CabModel = function() {
 					$("#page").addClass("map-wrap map-taxi");
 					break;
 				default:
-					fail(data.meta.code);
+					alert('Um erro inesperado ocorreu, contacte o suporte da aplicação');
 					break;
 				}
 			}

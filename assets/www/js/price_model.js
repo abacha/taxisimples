@@ -15,6 +15,7 @@ var PriceModel = function() {
 				switch (data.meta.code) {
 				case 200:
 					$("#page").addClass("map-wrap");
+					$("#map").removeClass('map-2');
 					$("#normal_price").html("R$ " + (String)(Math.round(data.response.normal_price*100)/100).replace(".", ","));
 					$("#special_price").html("R$ " + (String)(Math.round( data.response.special_price*100)/100).replace(".", ","));
 					$("#distance").html((String)(data.response.distance).replace(".", ",") + " km");

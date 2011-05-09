@@ -14,7 +14,7 @@
         <h2 id="special_price"></h2>
     </div>
     <div class="taxi-name">
-        <h3 id="status_ok" style="display:none;" class="status ok">Táxi a caminho: <span id="cab"></span></h3>
+        <h3 id="status_ok" style="display:none;" class="status ok">Táxi a caminho<br /><span id="cab"></span></h3>
         <h3 id="status_wait" style="display:none;" class="status wait">Aguarde, estamos chamando o seu táxi.</h3>
         <h3 id="status_error" style="display:none;" class="status error">Infelizmente nenhum táxi foi encontrado para o endereço solicitado</h3>
         <h3 id="status_cancel" style="display:none;" class="status error">O seu táxi foi cancelado, por favor entre em contato com o taxista</h3>
@@ -22,10 +22,12 @@
 </div>
 <script type="text/javascript">
 	function refresh() {
-		cab_controller.get_info($("#run_id").val());
-		setTimeout(function() { refresh(); }, 20000);
+		if (document.location.hash == "") {
+			cab_controller.get_info($("#run_id").val());
+			setTimeout(function() { refresh(); }, 40000);
+		}
 	}
 	$(document).ready(function() {
-		refresh();
+		setTimeout(function() { refresh(); }, 40000);
 	});
 </script>
