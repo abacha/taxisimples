@@ -167,13 +167,13 @@ body {
     position: absolute;
     top: 105px;
     width: 100%;
-    height: 622px;
+    height: 395px;
     overflow: hidden;
     background: #000;
 }
 #map-2 {
     top: 160px;
-    height: 582px;
+    height: 382px;
 }
 #map-info {
     background: #333;
@@ -279,4 +279,3 @@ body {
 .super {
 	display: none;
 }
-

@@ -47,6 +47,8 @@ var OAuth2Model = function() {
 				if (data.meta.code == 200) {
 					Configuration.access_token = data.response.access_token;
 					window.localStorage.setItem("access_token", Configuration.access_token);
+					window.localStorage.setItem("origin", null);
+					window.localStorage.setItem("destionation", null);
 					success();
 				} else {
 					fail();

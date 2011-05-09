@@ -19,6 +19,9 @@
 		<script type="text/javascript" charset="utf-8" src="js/taxisimples.js"></script>
 	</head>
 	<body onload="initializer();">
+		<div id="loading">
+			Hello, this is a block with some content before loading.
+		</div>
 		<div id="container">
 		    <div id="header"></div>
 		    <div id="map" style="display:none"></div>
@@ -26,5 +29,16 @@
 				<h2></h2>
 			</div>
 		</div>
+		<script type="text/javascript">
+		$('#loading')
+			.hide()  // hide it initially
+			.ajaxStart(function() {
+				$(this).show();
+			})
+			.ajaxStop(function() {
+				$(this).hide();
+			});
+		</script>
 	</body>
 </html>
+

@@ -15,9 +15,12 @@ var PriceModel = function() {
 				switch (data.meta.code) {
 				case 200:
 					$("#page").addClass("map-wrap");
-					$("#normal_price").html("R$ " + Math.round(data.response.normal_price*100)/100);
-					$("#special_price").html("R$ " + Math.round( data.response.special_price*100)/100);
-					$("#distance").html(data.response.distance + " km");
+					$("#normal_price").html("R$ " + (String)(Math.round(data.response.normal_price*100)/100).replace(".", ","));
+					$("#special_price").html("R$ " + (String)(Math.round( data.response.special_price*100)/100).replace(".", ","));
+					$("#distance").html((String)(data.response.distance).replace(".", ",") + " km");
+					window.localStorage.setItem("origin", params["start_point"]);
+					window.localStorage.setItem("destination", params["end_point"]);
+					window.localStorage.setItem("city", params["city"]);
 					$("#start_point").val(params["start_point"]);
 					$("#end_point").val(params["end_point"]);
 					$("#city").val(params["city"]);

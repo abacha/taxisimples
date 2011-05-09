@@ -19,9 +19,9 @@ var CabModel = function() {
 							$("#map").show();
 							$("#map").addClass('map-2');
 						}
-						$("#distance").html(data.response.cab.distance + " km");
-						$("#normal_price").html("R$ " + Math.round(data.response.normal_price * 100) / 100);
-						$("#special_price").html("R$ " + Math.round(data.response.special_price * 100) / 100);
+						$("#distance").html((String)(data.response.cab.distance).replace(".", ",") + " km");
+						$("#normal_price").html("R$ " + (String)(Math.round(data.response.normal_price*100)/100).replace(".", ","));
+						$("#special_price").html("R$ " + (String)(Math.round( data.response.special_price*100)/100).replace(".", ","));
 						$("#status_ok").show();
 						$("#cab").html(data.response.cab.name + " - " + data.response.cab.phone.substr(2).replace(/(\d{2})/, "($1) "));
 
@@ -59,8 +59,8 @@ var CabModel = function() {
 	this.request = function(params, success, fail) {
 		var data = {
 			access_token : Configuration.access_token,
-			start_point : "str:" + params["start_point"] + params["end_point"] + " - " + params["city"] + " - Brasil",
-			end_point : "str:" + params["end_point"] + params["end_point"] + " - " + params["city"] + " - Brasil"
+			start_point : "str:" + params["start_point"] + " - " + params["city"] + " - Brasil",
+			end_point : "str:" + params["end_point"] + " - " + params["city"] + " - Brasil"
 		}
 		$.ajax({
 			url : Url.Cab.request,
