@@ -2,7 +2,7 @@ Configuration = {
 	access_token : false,
 	client_id : "d845ddf93f3229b0574031dc3bc25611eec5998dce3d432a9cdc7efcd96cc3e9",
 	client_secret : "e2beae8e4c13755b051546f6c3443066af78760e97c83a9f4daf00cbfacbd95a",
-	server : "http://taxisimplessandbox.heroku.com"
+	server : "http://app.taxisimples.com.br"
 }
 
 Url = {
