@@ -14,16 +14,19 @@
 	<a class="btn" href="#/user/confirm_pin">Já possuo um código</a>
 </div>
 <script type="text/javascript">
-	$("#phone").focus(function() {
-		if ($(this).val() == "Celular") $(this).val("");
-	});
-	$("#phone").blur(function() {
-		if ($(this).val() == "") $(this).val("Celular");
-	});
-	$("#name").focus(function() {
-		if ($(this).val() == "Seu nome") $(this).val("");
-	});
-	$("#name").blur(function() {
-		if ($(this).val() == "") $(this).val("Seu nome");
+	$(document).ready(function() {
+		$("#phone").focus(function() {
+			if ($(this).val() == "Celular") $(this).val("");
+		});
+		$("#phone").blur(function() {
+			if ($(this).val() == "") $(this).val("Celular");
+		});
+		$("#name").focus(function() {
+			if ($(this).val() == "Seu nome") $(this).val("");
+		});
+		$("#name").blur(function() {
+			if ($(this).val() == "") $(this).val("Seu nome");
+		});
+		$("#phone").val("Celular");
 	});
 </script>

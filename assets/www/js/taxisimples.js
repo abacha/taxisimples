@@ -1,7 +1,7 @@
 Configuration = {
 	access_token : false,
-	client_id : "d845ddf93f3229b0574031dc3bc25611eec5998dce3d432a9cdc7efcd96cc3e9",
-	client_secret : "e2beae8e4c13755b051546f6c3443066af78760e97c83a9f4daf00cbfacbd95a",
+	client_id : "2769ca0ac1bb65476d629505354b825341e3d084172bfb3a942748c2974d9791",
+	client_secret : "ef17c2460488184901d82f3e72a21ff04da4838a8beb0284628cf27692cf6464",
 	server : "http://app.taxisimples.com.br"
 }
 
@@ -47,12 +47,20 @@ var app = $.sammy("#page", function() {
 	this.post('#/user/confirm_pin', oauth2_controller.confirm_pin);
 	this.post('#/user/authorize', oauth2_controller.request_pin);
 	this.get('#/run/route', function() {
-		this.partial('view/route.html');
-		route_controller.render(this.params);
+		if (!Configuration.access_token) {
+			document.location.hash = "#";
+		} else {
+			this.partial('view/route.html');
+			route_controller.render(this.params);
+		}
 	});
 	this.get('#/run/history', function() {
-		this.partial('view/history.html');
-		cab_controller.get_history();
+		if (!Configuration.access_token) {
+			document.location.hash = "#";
+		} else {
+			this.partial('view/history.html');
+			cab_controller.get_history();
+		}
 	});
 
 	this.post('#/run/price', function() {
@@ -72,8 +80,8 @@ var app = $.sammy("#page", function() {
 });
 
 var initializer = function() {
-	//document.addEventListener("deviceready", function() {
+	document.addEventListener("deviceready", function() {
 		Configuration.access_token = window.localStorage.getItem("access_token");
 		app.run("#/")
-	//}, false);
+	}, false);
 }
