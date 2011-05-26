@@ -127,9 +127,10 @@ var CabModel = function() {
 
 	var get_address = function(latlng, success) {
 		$.ajax({
-			url : "http://maps.googleapis.com/maps/api/geocode/json?sensor=false",
+			url : "http://maps.googleapis.com/maps/api/geocode/json",
 			type : "GET",
 			data : {
+				"sensor" : false,
 				"latlng" : latlng
 			},
 			dataType : "json",
